@@ -55,8 +55,8 @@ class MainFragment : Fragment(), MainRecyclerAdapter.Interaction {
             addItemDecoration(topSpacingDecorator)
 
             val requestOptions = RequestOptions
-                .placeholderOf(R.drawable.ic_launcher_foreground)
-                .error(R.drawable.ic_launcher_foreground)
+                .placeholderOf(R.drawable.ic_launcher_background)
+                .error(R.drawable.ic_launcher_background)
 
             mainRecyclerAdapter = MainRecyclerAdapter(
                 this@MainFragment,

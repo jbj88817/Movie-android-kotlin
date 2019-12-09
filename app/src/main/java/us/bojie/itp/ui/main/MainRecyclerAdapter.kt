@@ -73,7 +73,7 @@ class MainRecyclerAdapter(
                 interaction?.onItemSelected(adapterPosition, item)
             }
 
-            requestManager.load(item.Poster).into(itemView.imageView)
+            requestManager.load(item.Poster).into(itemView.movie_thumbnail)
             itemView.textView.text = item.Title
             itemView.textView2.text = item.Year
             itemView.imageButton.setOnClickListener {

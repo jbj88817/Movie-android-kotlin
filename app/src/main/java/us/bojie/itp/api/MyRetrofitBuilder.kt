@@ -5,7 +5,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import us.bojie.itp.util.LiveDataCallAdapterFactory
 
 object MyRetrofitBuilder {
-    const val BASE_URL = "http://www.omdbapi.com/"
+    const val BASE_URL = "https://www.omdbapi.com/"
     const val SEARCH_DEFAULT_STR = "avengers"
     const val API_KEY = "586573af"
 
