@@ -2,7 +2,6 @@ package us.bojie.itp.ui.main
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,7 +16,6 @@ import us.bojie.itp.R
 import us.bojie.itp.model.Movie
 import us.bojie.itp.ui.DataStateListener
 import us.bojie.itp.ui.main.state.MainStateEvent.GetMoviesEvent
-import us.bojie.itp.util.TopSpacingItemDecoration
 
 class MainFragment : Fragment(), MainRecyclerAdapter.Interaction {
 
@@ -48,9 +46,9 @@ class MainFragment : Fragment(), MainRecyclerAdapter.Interaction {
     private fun initRecyclerView() {
         main_recycler_view.apply {
             layoutManager = LinearLayoutManager(this@MainFragment.context)
-            val topSpacingDecorator = TopSpacingItemDecoration(30)
-            removeItemDecoration(topSpacingDecorator) // does nothing if not applied already
-            addItemDecoration(topSpacingDecorator)
+//            val topSpacingDecorator = TopSpacingItemDecoration(30)
+//            removeItemDecoration(topSpacingDecorator) // does nothing if not applied already
+//            addItemDecoration(topSpacingDecorator)
 
             val requestOptions = RequestOptions
                 .placeholderOf(R.drawable.ic_launcher_background)
@@ -125,6 +123,12 @@ class MainFragment : Fragment(), MainRecyclerAdapter.Interaction {
     }
 
     override fun onDeleteButtonClicked(position: Int, item: Movie) {
-        Log.d("MainFragment", "onDeleteButtonClicked (line 121): ")
+        viewModel.getCurrentViewStateOrNew().movieResponse?.let {
+            val movieList = it.Movies.toMutableList()
+            val deletedList = movieList - item
+            it.Movies = deletedList
+            viewModel.setMovieResponseData(it)
+            mainRecyclerAdapter.submitList(deletedList)
+        }
     }
 }

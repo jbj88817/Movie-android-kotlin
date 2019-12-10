@@ -9,7 +9,7 @@ data class MovieResponse(
     val Response: String,
     @Expose
     @SerializedName("Search")
-    val Movies: List<Movie>,
+    var Movies: List<Movie>,
     val totalResults: String
 )
 

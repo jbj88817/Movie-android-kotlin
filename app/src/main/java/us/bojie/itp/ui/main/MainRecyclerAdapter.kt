@@ -76,6 +76,11 @@ class MainRecyclerAdapter(
             requestManager.load(item.Poster).into(itemView.movie_thumbnail)
             itemView.textView.text = item.Title
             itemView.textView2.text = item.Year
+            if (adapterPosition % 2 == 0) {
+                itemView.setBackgroundColor(context.getColor(android.R.color.white))
+            } else {
+                itemView.setBackgroundColor(context.getColor(android.R.color.holo_blue_light))
+            }
             itemView.imageButton.setOnClickListener {
                 interaction?.onDeleteButtonClicked(adapterPosition, item)
             }
