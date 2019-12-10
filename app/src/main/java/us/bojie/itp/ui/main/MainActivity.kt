@@ -1,12 +1,12 @@
-package us.bojie.itp
+package us.bojie.itp.ui.main
 
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.main_activity.*
+import us.bojie.itp.R
 import us.bojie.itp.ui.DataStateListener
-import us.bojie.itp.ui.main.MainFragment
 import us.bojie.itp.util.DataState
 
 class MainActivity : AppCompatActivity(),
@@ -18,10 +18,18 @@ class MainActivity : AppCompatActivity(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
-        if (savedInstanceState == null) {
+        showMainFragment()
+    }
+
+    private fun showMainFragment() {
+        if (supportFragmentManager.fragments.size == 0) {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.container, MainFragment.newInstance())
-                .commitNow()
+                .replace(
+                    R.id.fragment_container,
+                    MainFragment::class.java,
+                    null
+                )
+                .commit()
         }
     }
 
@@ -47,8 +55,7 @@ class MainActivity : AppCompatActivity(),
         if (isVisible) {
             progress_bar.visibility = View.VISIBLE
         } else {
-            progress_bar.visibility = View.INVISIBLE
+            progress_bar.visibility = View.GONE
         }
     }
-
 }

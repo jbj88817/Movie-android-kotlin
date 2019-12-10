@@ -29,16 +29,16 @@ class MainViewModel : ViewModel() {
             }
         }
 
-    fun handleStateEvent(stateEvent: MainStateEvent): LiveData<DataState<MainViewState>> {
+    private fun handleStateEvent(stateEvent: MainStateEvent): LiveData<DataState<MainViewState>> {
         println("DEBUG: New StateEvent detected: $stateEvent")
-        when(stateEvent){
+        return when(stateEvent){
 
             is GetMoviesEvent -> {
-                return Repository.getMovies()
+                Repository.getMovies()
             }
 
             is None ->{
-                return AbsentLiveData.create()
+                AbsentLiveData.create()
             }
         }
     }

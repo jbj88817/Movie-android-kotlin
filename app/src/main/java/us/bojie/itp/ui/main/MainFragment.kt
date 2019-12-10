@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -20,10 +20,6 @@ import us.bojie.itp.ui.main.state.MainStateEvent.GetMoviesEvent
 import us.bojie.itp.util.TopSpacingItemDecoration
 
 class MainFragment : Fragment(), MainRecyclerAdapter.Interaction {
-
-    companion object {
-        fun newInstance() = MainFragment()
-    }
 
     private lateinit var viewModel: MainViewModel
 
@@ -40,7 +36,9 @@ class MainFragment : Fragment(), MainRecyclerAdapter.Interaction {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
+        viewModel = activity?.run {
+            ViewModelProvider(this).get(MainViewModel::class.java)
+        } ?: throw Exception("Invalid Activity")
 
         initRecyclerView()
         subscribeObservers()
@@ -114,11 +112,19 @@ class MainFragment : Fragment(), MainRecyclerAdapter.Interaction {
     }
 
     override fun onItemSelected(position: Int, item: Movie) {
-        Log.d("MainFragment", "onItemSelected (line 117): $position $item")
+        viewModel.setMovie(item)
+        activity?.supportFragmentManager
+            ?.beginTransaction()
+            ?.replace(
+                R.id.fragment_container,
+                DetailFragment::class.java,
+                null
+            )
+            ?.addToBackStack("DetailFragment")
+            ?.commit()
     }
 
     override fun onDeleteButtonClicked(position: Int, item: Movie) {
         Log.d("MainFragment", "onDeleteButtonClicked (line 121): ")
     }
-
 }
